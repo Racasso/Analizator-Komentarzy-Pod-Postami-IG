@@ -1,0 +1,1 @@
+# Analizator-Komentarzy-Pod-Postami-IG
