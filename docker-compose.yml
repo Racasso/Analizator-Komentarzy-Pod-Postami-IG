@@ -1,0 +1,54 @@
+services:
+  mongo:
+    image: mongo:8.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${MONGO_PUBLISHED_PORT:-27017}:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: .
+    restart: unless-stopped
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DATABASE: ${MONGO_DATABASE:-campaign_analytics}
+    ports:
+      - "127.0.0.1:${API_PUBLISHED_PORT:-8000}:8000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  worker:
+    build: .
+    restart: unless-stopped
+    command: ["python", "-m", "app.worker"]
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DATABASE: ${MONGO_DATABASE:-campaign_analytics}
+      APIFY_TOKEN: ${APIFY_TOKEN:-}
+      APIFY_ACTOR_ID: ${APIFY_ACTOR_ID:-apify/instagram-comment-scraper}
+      APIFY_MAX_TOTAL_CHARGE_USD: ${APIFY_MAX_TOTAL_CHARGE_USD:-15.00}
+      WORKER_POLL_SECONDS: ${WORKER_POLL_SECONDS:-2}
+      JOB_LEASE_SECONDS: ${JOB_LEASE_SECONDS:-86400}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo-data:
