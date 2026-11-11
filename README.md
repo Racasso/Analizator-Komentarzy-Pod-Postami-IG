@@ -1,4 +1,4 @@
-# Analiza komentarzy kampanii Oskar Kuban
+# Analiza komentarzy kampanii
 
 Prosta aplikacja backendowa do pobierania publicznych komentarzy z postów i rolek na Instagramie oraz zliczania komentarzy, które zawierają pytanie o cenę, prośbę o link lub negatywną opinię. Dane są pobierane przez aktora Apify Store `apify/instagram-comment-scraper`.
 
