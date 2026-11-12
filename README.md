@@ -235,9 +235,3 @@ requirements.txt przypięte wersje zależności Pythona
 - [PyMongo — dokumentacja](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/)
 - [Apify Python client — dokumentacja](https://docs.apify.com/api/client/python/docs/overview)
 - [Apify Instagram Comments Scraper — opis aktora](https://apify.com/apify/instagram-comment-scraper)
-
-## Informacje do uzupełnienia przed publikacją
-
-Repozytorium nie zawiera pliku licencji ani potwierdzonych danych autora, dlatego README ich nie deklaruje. Jeśli projekt ma być publikowany jako open source, wybierz licencję i dodaj odpowiedni plik. Nie dodawaj do GitHub pliku `.env` ani tokenu Apify.
-
-README przygotowano na podstawie kodu w `app/`, konfiguracji `Dockerfile`, `docker-compose.yml`, `requirements.txt`, `.env.example`, `.gitignore`, `.dockerignore`, testów i fixture’ów w `tests/` oraz przykładowego wyniku działania API. Przed publikacją sprawdź, czy opisane zmienne i przykładowe URL-e odpowiadają konfiguracji używanej w danym środowisku.
